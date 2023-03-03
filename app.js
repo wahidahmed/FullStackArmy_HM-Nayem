@@ -1,13 +1,23 @@
 
+let arr=[
+{id:1,value:10},
+{id:2,value:20},
+{id:3,value:30},
+]
 
-const arr=[1,3,2,null,5,false,4,'','test',7,'law'];
 
-for (let i = 0; i < arr.length; i++) {
-    for (let j  = i; j < arr.length-1; j++) {
-       if ( typeof arr[j]!== 'number' ) {
-            arr[j]=arr[j+1];
-       }
-    }
-}
+var index=arr.findIndex((v)=>{
+    return v.id==2;
+})
+
+console.log(index);
+arr[index]=200;
 
 console.log(arr);
+
+var obj=arr.find((v)=>{
+return v.id==index;
+})
+
+obj.value=100;
+console.log('obj',obj);
