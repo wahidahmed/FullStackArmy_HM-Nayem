@@ -134,7 +134,7 @@ function uuid() {
 
   const sum=myReduce([1,2,3,4],(a,b)=>a+b,0);
 
-  console.log(sum);
+  // console.log(sum);
 
 
   const result=myReduce([1,2,4,'',null,3,false],
@@ -146,7 +146,58 @@ function uuid() {
     },[]
   )
 
-  console.log(result);
+  // console.log(result);
+
+
+
+  const axios=require('axios').default;
+
+  const url='https://jsonplaceholder.typicode.com/users';
+  async function getData(){
+    const {data}=await axios.get(url);
+
+    const result=
+    // data.map((item)=>{
+    //   return {
+    //     name:item.name,
+    //     id:item.id,
+    //     username:item.username
+    //   }
+    // })
+    data.reduce((acc,cur)=>{
+      acc[cur.id]={...cur};
+      delete acc[cur.id].address;
+      delete acc[cur.id].company;
+        return acc;
+    },{})
+
+    return result;
+  }
+  // getData().then((data)=>console.log(data)).catch(e=>console.log(e));
+
+
+const names=[
+  'wahid','wazed','ayman','aurup','siam','salman','saklain','ripon'
+]
+
+const nameGroup=names.reduce((acc,cur)=>{
+  let firstLetter=cur[0].toUpperCase();
+  if(acc[firstLetter]){
+    acc[firstLetter].push(cur)
+  }
+  else{
+    acc[firstLetter]=[cur];
+  }
+  return acc;
+},{})
+
+Object.keys(nameGroup).forEach((key)=>{
+  console.log('====',key,'=====');
+  nameGroup[key].forEach((item)=>console.log(item))
+  console.log('\n');
+})
+// console.log(nameGroup);
+
 
 
 
