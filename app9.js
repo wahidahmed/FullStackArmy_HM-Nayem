@@ -16,3 +16,15 @@ const higherFnResult=higherFn(100,(r1,r2)=>{
     }
 })
 
+
+function prower(p){
+    return function(n){
+        let result=1;
+        for(let i=1;i<=p;i++){
+            result *=n;
+        }
+        return result;
+    }
+}
+
+console.log(prower(2)(3));
