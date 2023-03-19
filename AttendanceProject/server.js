@@ -8,5 +8,5 @@ app.listen(4000,()=>{
 
 
 app.get('/',(req,res,next)=>{
-    res.send('thank for your request');
+    res.send('thanks for your request');
 });
