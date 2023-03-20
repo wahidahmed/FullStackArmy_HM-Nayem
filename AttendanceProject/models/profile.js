@@ -7,7 +7,7 @@ const profileSchema=new Schema({
     phone: String,
     profilePicture: String,
     avatar: String,
-    user: {
+    user: { 
         type: Schema.Types.ObjectId,
         ref:'User'
     }
