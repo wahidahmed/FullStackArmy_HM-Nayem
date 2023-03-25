@@ -1,9 +1,9 @@
 
-// const range={
-//     start:1,
-//     stop:100,
-//     step:5
-// }
+const range={
+    start:1,
+    stop:100,
+    step:5
+}
 
 
 // range[Symbol.iterator]=function(){
@@ -22,6 +22,8 @@
 //         }
 //     }
 // }
+
+
 
 
 
