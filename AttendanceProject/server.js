@@ -23,6 +23,12 @@ app.post('/register',async (req,res)=>{
     email:email,
     password:password
   })
+
+  const salt= await bcrypt.genSalt(10);
+  const hash= await bcrypt.hash(password,salt);
+
+  user.password=hash;
+
   await user.save();
   return res.status(201).json({message:'Successully User Created',user });
 })
