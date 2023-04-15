@@ -2,6 +2,7 @@ const express=require('express');
 const connectDB=require('./db');
 const User=require('./models/User');
 const bcrypt=require('bcryptjs');
+const jwt=require('jsonwebtoken');
 
 const app=express();
 
@@ -54,10 +55,32 @@ app.post('/login',async(req,res,next)=>{
         return res.status(400).json({message:'Invalid Credential'});
     }
 
-    delete user._doc.password;// Since we provide user detail with successfull message so delete the password because we dont provide hash password to user
-    return res.status(200).json({message:'Login successfull',user});
+    delete user._doc.password;
+
+    const token =jwt.sign(user._doc,'secret-key',{expiresIn:'2h'});
+    return res.status(200).json({message:'Login successfull',token});
     } catch (e) {
         next(e);
+    }
+})
+
+app.get('/private',async(req,res)=>{
+    let token=req.headers.authorization;
+    if(!token){
+        return res.status(401).json({message:'Unauthorized'});
+    }
+
+    try {
+        token=token.split(' ')[1];
+        const decoded=jwt.verify(token,'secret-key');
+        const user=await User.findById(decoded._id);
+        if(!user){
+            return res.status(401).json({message:'Invalid User'});
+        }
+        return res.status(200).json({message:'I am a private route'});
+
+    } catch (e) {
+        return res.status(400).json({message:'Invalid Token'});
     }
 })
 
