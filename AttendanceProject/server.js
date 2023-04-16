@@ -3,6 +3,7 @@ const connectDB=require('./db');
 const User=require('./models/User');
 const bcrypt=require('bcryptjs');
 const jwt=require('jsonwebtoken');
+const authentcate=require('./middleware/authenticate');
 
 const app=express();
 
@@ -64,24 +65,8 @@ app.post('/login',async(req,res,next)=>{
     }
 })
 
-app.get('/private',async(req,res)=>{
-    let token=req.headers.authorization;
-    if(!token){
-        return res.status(401).json({message:'Unauthorized'});
-    }
-
-    try {
-        token=token.split(' ')[1];
-        const decoded=jwt.verify(token,'secret-key');
-        const user=await User.findById(decoded._id);
-        if(!user){
-            return res.status(401).json({message:'Invalid User'});
-        }
-        return res.status(200).json({message:'I am a private route'});
-
-    } catch (e) {
-        return res.status(400).json({message:'Invalid Token'});
-    }
+app.get('/private',authentcate,(req,res)=>{
+   res.status(200).json({message:'I am private route'});
 })
 
 connectDB('mongodb://localhost:27017/attendance-db')
