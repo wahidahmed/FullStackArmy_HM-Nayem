@@ -1,16 +1,17 @@
 const {model,Schema}=require('mongoose');
 
 const studentAttendenceSchema=new Schema({
-    createdAt: Date,
     user:{
         type:Schema.Types.ObjectId,
-        ref:'User'
+        ref:'User',
+        required:true
     },
     adminAttendence:{
         type:Schema.Types.ObjectId,
-        ref:'AdminAttendence'
+        ref:'AdminAttendence',
+        required:true
     }
-})
+},{timestamps:true})
 
 const StudentAttendence=model('StudentAttendence',studentAttendenceSchema);
 
